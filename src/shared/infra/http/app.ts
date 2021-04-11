@@ -15,7 +15,7 @@ createConnection();
 const origin = 'http://localhost:3000'
 
 app.use(express.json({ limit: '5mb' }));
-app.use(cors({ origin }));
+app.use(cors());
 app.use('/files', express.static(profilePics));
 app.use(routes);
 
