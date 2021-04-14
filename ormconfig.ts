@@ -1,10 +1,10 @@
-module.exports = {
+export = {
   "type": "postgres",
   "url": process.env.DATABASE_URL,
   "entities": [process.env.ENTITIES],
   "migrations": [process.env.MIGRATIONS],
-  "ssl": true,
-  "extra": {
+  "ssl": !(process.env.NODE_ENV == 'development'),
+  "extra":  process.env.NODE_ENV == 'development' ? null : {
     "ssl": {
       "rejectUnauthorized": false,
     },
@@ -12,4 +12,4 @@ module.exports = {
   "cli": {
     "migrationsDir": "./src/shared/infra/typeorm/migrations"
   }
-}
+};
