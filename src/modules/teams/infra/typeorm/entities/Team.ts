@@ -1,5 +1,5 @@
 import Avatar from '@modules/avatars/infra/typeorm/entities/Avatar';
-import Team from '@modules/teams/infra/typeorm/entities/Team';
+import User from '@modules/users/infra/typeorm/entities/User';
 import {
 	PrimaryGeneratedColumn,
 	Column,
@@ -8,26 +8,25 @@ import {
 	Entity,
 	ManyToOne,
 	JoinColumn,
-	OneToMany,
 } from 'typeorm';
 
-@Entity('users')
-class User {
+@Entity('teams')
+class Team {
 	@PrimaryGeneratedColumn('uuid')
 	id: string;
 
 	@Column()
-	username: string;
+	user_id: string;
+
+	@ManyToOne(() => User, user => user)
+	@JoinColumn({ name: 'user_id' })
+	user: User;
 
 	@Column()
-	password: string;
+	name: string;
 
 	@Column()
-	email: string;
-
-	@ManyToOne(() => Avatar)
-	@JoinColumn({ name: 'avatar_id' })
-	avatar_id: string;
+	color: string;
 
 	@CreateDateColumn()
 	created_at: Date;
@@ -36,4 +35,4 @@ class User {
 	updated_at: Date;
 }
 
-export default User;
+export default Team;

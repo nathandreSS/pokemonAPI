@@ -1,6 +1,6 @@
 import {MigrationInterface, QueryRunner, Table, TableForeignKey} from "typeorm";
 
-export default class CreatePomenonsTeamTable1618405099749 implements MigrationInterface {
+export default class CreatePokemonsTeamTable1618405099749 implements MigrationInterface {
 
     public async up(queryRunner: QueryRunner): Promise<void> {
         await queryRunner.createTable(

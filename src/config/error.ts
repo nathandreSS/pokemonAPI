@@ -4,21 +4,11 @@ interface IError {
 }
 export default {
 	// BAD REQUEST
-	uniqueUsername: {
-		message: 'Username is already in use',
-		statusCode: 400,
-	},
-	uniqueVideoTitle: {
-		message: 'Video with this title already exists',
-		statusCode: 400,
-	},
-	uniqueVideoUrl: {
-		message: 'Video with this url already exists',
-		statusCode: 400,
-	},
-	uniqueEmail: {
-		message: 'Email is already in use',
-		statusCode: 400,
+	uniqueResource(entity: string, field: string): IError {
+		return { 
+			message: `${AOrAn(entity)} ${entity} with that ${field} already exists`,
+			statusCode: 400
+		};
 	},
 	// NOT FOUND
 	invalidId(entity: string): IError {
@@ -47,3 +37,9 @@ export default {
 		statusCode: 401,
 	},
 };
+
+function AOrAn(word: string): string{
+	const vowelRegex = '^[aieouAIEOU].*'
+	const matched = word.match(vowelRegex);
+	return matched ? 'An' : 'A';
+}
