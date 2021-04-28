@@ -8,6 +8,7 @@ import AppError from '@shared/errors/AppError';
 import IUsersRepository from '../repositories/IUsersRepository';
 import IHashProvider from '../providers/models/IHashProvider';
 import axios from 'axios';
+import IAvatarRepository from '@modules/avatars/repositories/IAvatarsRepository';
 
 interface IRequest {
 	email: string;
@@ -24,6 +25,10 @@ class AuthenticateUserService {
 	constructor(
 		@inject('UsersRepository')
 		private usersRepository: IUsersRepository,
+
+		@inject('AvatarRepository')
+		private avatarRepository: IAvatarRepository,
+
 		@inject('HashProvider')
 		private hashProvider: IHashProvider,
 	) {}
@@ -55,7 +60,8 @@ class AuthenticateUserService {
 			expiresIn,
 		});
 
-		return {token, username: user.username};
+		const avatar = await this.avatarRepository.findById(user.avatar_id);
+		return {token, username: user.username, avatar: avatar?.name};
 	}
 }
 
