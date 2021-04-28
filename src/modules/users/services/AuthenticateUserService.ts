@@ -10,7 +10,7 @@ import IHashProvider from '../providers/models/IHashProvider';
 import axios from 'axios';
 
 interface IRequest {
-	username: string;
+	email: string;
 	password: string;
 }
 
@@ -29,10 +29,10 @@ class AuthenticateUserService {
 	) {}
 
 	public async execute({
-		username,
+		email,
 		password,
 	}: IRequest): Promise<any> {
-		const user = await this.usersRepository.findByUsername(username);
+		const user = await this.usersRepository.findByEmail(email);
 
 		if (!user) {
 			const { message, statusCode } = errorConfig.invalidAuthenctication;
