@@ -27,19 +27,12 @@ class CreateUserService {
 		email,
 		avatar_id,
 	}: IRequest): Promise<User | null> {
-		const existUserWithThisUsername = await this.usersRepository.findByUsername(
-			username,
-		);
 		const existUserWithThisEmail = await this.usersRepository.findByEmail(
 			email,
 		);
 
-		if (existUserWithThisUsername) {
-			const { message, statusCode } = errorConfig.uniqueUsername;
-			throw new AppError(message, statusCode);
-		}
 		if (existUserWithThisEmail) {
-			const { message, statusCode } = errorConfig.uniqueEmail;
+			const { message, statusCode } = errorConfig.uniqueResource('User', 'email');
 			throw new AppError(message, statusCode);
 		}
 
